@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb://toinhao1:blackwhit1@ds261155.mlab.com:61155/real-time-shopping-list",
+  "jwtSecret": "sl_myJwtSecret"
+}
