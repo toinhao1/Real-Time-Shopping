@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Label,
+  Input
+} from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemActions';
@@ -16,7 +23,7 @@ class ShoppingList extends Component {
     this.props.getItems();
   }
 
-  onDeleteClick = id => {
+  onDeleteClick = (id) => {
     this.props.deleteItem(id);
   };
 
@@ -25,21 +32,24 @@ class ShoppingList extends Component {
     return (
       <Container>
         <ListGroup>
-          <TransitionGroup className='shopping-list'>
+          <TransitionGroup className="shopping-list">
             {items.map(({ _id, name }) => (
-              <CSSTransition key={_id} timeout={500} classNames='fade'>
+              <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
                   {this.props.isAuthenticated ? (
                     <Button
-                      className='remove-btn'
-                      color='danger'
-                      size='sm'
+                      className="remove-btn"
+                      color="danger"
+                      size="sm"
                       onClick={this.onDeleteClick.bind(this, _id)}
                     >
                       &times;
                     </Button>
                   ) : null}
                   {name}
+                  {/* <Label check>
+                    <Input type="checkbox" /> {'      '}Purchased
+                  </Label> */}
                 </ListGroupItem>
               </CSSTransition>
             ))}
@@ -50,7 +60,7 @@ class ShoppingList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated
 });

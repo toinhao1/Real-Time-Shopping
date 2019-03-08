@@ -6,7 +6,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  // NavLink,
   Container
 } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -36,7 +36,7 @@ class AppNavbar extends Component {
     const authLinks = (
       <Fragment>
         <NavItem>
-          <span className='navbar-text mr-3'>
+          <span className="navbar-text mr-3">
             <strong>{user ? `Welcome ${user.name}` : ''}</strong>
           </span>
         </NavItem>
@@ -59,12 +59,12 @@ class AppNavbar extends Component {
 
     return (
       <div>
-        <Navbar color='dark' dark expand='sm' className='mb-5'>
+        <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href='/'>ShoppingList</NavbarBrand>
+            <NavbarBrand href="/">ShoppingList</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className='ml-auto' navbar>
+              <Nav className="ml-auto" navbar>
                 {isAuthenticated ? authLinks : guestLinks}
               </Nav>
             </Collapse>
@@ -75,7 +75,7 @@ class AppNavbar extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth
 });
 

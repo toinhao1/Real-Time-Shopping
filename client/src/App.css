@@ -1,6 +1,9 @@
 .remove-btn {
   margin-right: 0.5rem;
 }
+.edit-btn {
+  margin-right: 01rem;
+}
 
 .fade-enter {
   opacity: 0.01;

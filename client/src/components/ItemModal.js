@@ -29,11 +29,11 @@ class ItemModal extends Component {
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const newItem = {
@@ -52,14 +52,14 @@ class ItemModal extends Component {
       <div>
         {this.props.isAuthenticated ? (
           <Button
-            color='dark'
+            color="dark"
             style={{ marginBottom: '2rem' }}
             onClick={this.toggle}
           >
             Add Item
           </Button>
         ) : (
-          <h4 className='mb-3 ml-4'>Please log in to manage items</h4>
+          <h4 className="mb-3 ml-4">Please log in to manage items</h4>
         )}
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
@@ -67,15 +67,15 @@ class ItemModal extends Component {
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for='item'>Item</Label>
+                <Label for="item">Item</Label>
                 <Input
-                  type='text'
-                  name='name'
-                  id='item'
-                  placeholder='Add shopping item'
+                  type="text"
+                  name="name"
+                  id="item"
+                  placeholder="Add shopping item"
                   onChange={this.onChange}
                 />
-                <Button color='dark' style={{ marginTop: '2rem' }} block>
+                <Button color="dark" style={{ marginTop: '2rem' }} block>
                   Add Item
                 </Button>
               </FormGroup>
@@ -87,7 +87,7 @@ class ItemModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated
 });
