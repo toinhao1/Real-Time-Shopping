@@ -30,7 +30,7 @@ router.post('/', auth, (req, res) => {
 // @access  Private
 router.put('/:id', auth, (req, res) => {
   Item.findById(req.params.id)
-    .then((item) => item.edit().then(() => res.json({ success: true })))
+    .then((item) => item.edit().then(() => res.json(item)))
     .catch((err) => res.status(404).json({ success: false }));
 });
 
