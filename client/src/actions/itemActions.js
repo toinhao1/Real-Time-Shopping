@@ -37,13 +37,14 @@ export const addItem = (item) => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
 export const editItem = (item, id) => (dispatch, getState) => {
   axios
     .put(`/api/items/${id}`, item, tokenConfig(getState))
-    .then((req, res) =>
+    .then((res) =>
       dispatch({
         type: EDIT_ITEM,
-        payload: id
+        payload: res.data
       })
     )
     .catch((err) =>

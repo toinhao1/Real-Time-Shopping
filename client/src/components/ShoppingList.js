@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
   Container,
   ListGroup,
   ListGroupItem,
-  Button,
   Label,
   Input
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems, deleteItem } from '../actions/itemActions';
+import { getItems, deleteItem, editItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
+  state = {
+    modal: false,
+    name: ''
+  };
   static propTypes = {
     getItems: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired,
@@ -22,9 +31,36 @@ class ShoppingList extends Component {
   componentDidMount() {
     this.props.getItems();
   }
+  // onEditClick = (item, id) => {
+  //   this.props.editItem(id);
+  // };
 
   onDeleteClick = (id) => {
     this.props.deleteItem(id);
+  };
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = (e, id) => {
+    e.preventDefault();
+
+    const newItem = {
+      name: this.state.name
+    };
+
+    // Add item via addItem action
+    this.props.editItem(newItem, id);
+    console.log(newItem, id);
+
+    // Close modal
+    this.toggle();
   };
 
   render() {
@@ -47,9 +83,42 @@ class ShoppingList extends Component {
                     </Button>
                   ) : null}
                   {name}
+                  {this.props.isAuthenticated ? (
+                    <Button
+                      color="dark"
+                      style={{ marginBottom: '2rem' }}
+                      onClick={this.toggle}
+                    >
+                      Edit Item
+                    </Button>
+                  ) : null}
                   {/* <Label check>
                     <Input type="checkbox" /> {'      '}Purchased
                   </Label> */}
+                  <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Edit Item</ModalHeader>
+                    <ModalBody>
+                      <Form onSubmit={this.onSubmit}>
+                        <FormGroup>
+                          <Label for="item">Item</Label>
+                          <Input
+                            type="text"
+                            name="name"
+                            id={(this, _id)}
+                            placeholder="Edit item"
+                            onChange={this.onChange}
+                          />
+                          <Button
+                            color="dark"
+                            style={{ marginTop: '2rem' }}
+                            block
+                          >
+                            Edit Item
+                          </Button>
+                        </FormGroup>
+                      </Form>
+                    </ModalBody>
+                  </Modal>
                 </ListGroupItem>
               </CSSTransition>
             ))}
@@ -67,5 +136,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getItems, deleteItem }
+  { getItems, deleteItem, editItem }
 )(ShoppingList);

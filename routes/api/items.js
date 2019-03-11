@@ -28,9 +28,9 @@ router.post('/', auth, (req, res) => {
 // @route   PUT api/items/:id
 // @desc    Edit an Item
 // @access  Private
-router.put('/:id', auth, (req, res) => {
+router.post('/:id', auth, (req, res) => {
   Item.findById(req.params.id)
-    .then((item) => item.edit().then(() => res.json(item)))
+    .then((item) => item.update().then((item) => res.json(item)))
     .catch((err) => res.status(404).json({ success: false }));
 });
 
