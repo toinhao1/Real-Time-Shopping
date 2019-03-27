@@ -29,15 +29,16 @@ class ItemModal extends Component {
     });
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
 
     const newItem = {
-      name: this.state.name
+      name: this.state.name,
+      completed: false
     };
     // Add item via addItem action
     this.props.addItem(newItem);
@@ -85,7 +86,7 @@ class ItemModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated
 });

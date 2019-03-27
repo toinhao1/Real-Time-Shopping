@@ -18,10 +18,19 @@ import { getItems, deleteItem, editItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
-  state = {
-    modal: false,
-    name: ''
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modal: false,
+      name: '',
+      completed: false,
+      selectedItem: null
+    };
+
+    this.onChangeItemCompleted = this.onChangeItemCompleted.bind(this);
+  }
+
   static propTypes = {
     getItems: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired,
@@ -31,33 +40,40 @@ class ShoppingList extends Component {
   componentDidMount() {
     this.props.getItems();
   }
-  // onEditClick = (item, id) => {
-  //   this.props.editItem(id);
-  // };
-
-  onDeleteClick = (id) => {
+  onDeleteClick = id => {
     this.props.deleteItem(id);
   };
-  toggle = () => {
+  toggle = id => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      id: id
     });
   };
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChangeItemCompleted(e) {
+    this.setState({
+      todo_completed: !this.state.todo_completed
+    });
+  }
+
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   };
 
-  onSubmit = (e, id) => {
+  onSubmit = e => {
     e.preventDefault();
 
     const newItem = {
-      name: this.state.name
+      name: this.state.name,
+      completed: this.state.completed,
+      id: this.state.id
     };
 
-    // Add item via addItem action
-    this.props.editItem(newItem, id);
-    console.log(newItem, id);
+    // Add item via editItem action
+    this.props.editItem(newItem, this.state.id);
+    console.log(newItem);
 
     // Close modal
     this.toggle();
@@ -87,14 +103,12 @@ class ShoppingList extends Component {
                     <Button
                       color="dark"
                       style={{ marginBottom: '2rem' }}
-                      onClick={this.toggle}
+                      onClick={() => this.toggle(_id)}
                     >
                       Edit Item
                     </Button>
                   ) : null}
-                  {/* <Label check>
-                    <Input type="checkbox" /> {'      '}Purchased
-                  </Label> */}
+
                   <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Edit Item</ModalHeader>
                     <ModalBody>
@@ -104,10 +118,27 @@ class ShoppingList extends Component {
                           <Input
                             type="text"
                             name="name"
-                            id={(this, _id)}
+                            id={_id}
                             placeholder="Edit item"
                             onChange={this.onChange}
                           />
+                          {/* <FormGroup row>
+                            <Label for="checkbox" sm={1} />
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="checkbox"
+                                  className="form-check-input"
+                                  id="completedCheckbox"
+                                  name="completedCheckbox"
+                                  onChange={this.onChangeItemCompleted}
+                                  checked={this.state.completed}
+                                  value={this.state.completed}
+                                />{' '}
+                                Purchased
+                              </Label>
+                            </FormGroup>
+                          </FormGroup> */}
                           <Button
                             color="dark"
                             style={{ marginTop: '2rem' }}
@@ -129,7 +160,7 @@ class ShoppingList extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated
 });

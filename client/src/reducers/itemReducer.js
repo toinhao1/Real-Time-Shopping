@@ -22,12 +22,14 @@ export default function(state = initialState, action) {
     case DELETE_ITEM:
       return {
         ...state,
-        items: state.items.filter((item) => item._id !== action.payload)
+        items: state.items.filter(item => item._id !== action.payload)
       };
     case EDIT_ITEM:
       return {
         ...state,
-        items: [action.payload, ...state.items]
+        items: state.items.map(item =>
+          item._id === action.payload._id ? action.payload : item
+        )
       };
     case ADD_ITEM:
       return {
