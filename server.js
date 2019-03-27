@@ -2,8 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('config');
+const appConfig = require('./config/main-config.js');
 
 const app = express();
+
+// Config dotenv
+appConfig.init();
 
 // Bodyparser Middleware
 app.use(express.json());
@@ -13,7 +17,7 @@ const db = config.get('mongoURI');
 
 // Connect to Mongo
 mongoose
-  .connect(db, { 
+  .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true
   }) // Adding new mongo url parser
