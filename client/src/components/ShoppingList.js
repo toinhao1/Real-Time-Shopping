@@ -40,19 +40,21 @@ class ShoppingList extends Component {
   componentDidMount() {
     this.props.getItems();
   }
+
   onDeleteClick = id => {
     this.props.deleteItem(id);
   };
-  toggle = id => {
+  toggle = (id, name) => {
     this.setState({
       modal: !this.state.modal,
-      id: id
+      id: id,
+      name: this.state.name
     });
   };
 
   onChangeItemCompleted(e) {
     this.setState({
-      todo_completed: !this.state.todo_completed
+      completed: !this.state.completed
     });
   }
 
@@ -73,7 +75,6 @@ class ShoppingList extends Component {
 
     // Add item via editItem action
     this.props.editItem(newItem, this.state.id);
-    console.log(newItem);
 
     // Close modal
     this.toggle();
@@ -102,11 +103,30 @@ class ShoppingList extends Component {
                   {this.props.isAuthenticated ? (
                     <Button
                       color="dark"
-                      style={{ marginBottom: '2rem' }}
+                      style={{ marginRight: '2rem', marginLeft: '2rem' }}
                       onClick={() => this.toggle(_id)}
                     >
                       Edit Item
                     </Button>
+                  ) : null}
+                  {this.props.isAuthenticated ? (
+                    <FormGroup row style={{ marginLeft: '1rem' }}>
+                      <Label for="checkbox" sm={1} />
+                      <FormGroup check>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="completedCheckbox"
+                            name="completedCheckbox"
+                            onChange={this.onChangeItemCompleted}
+                            checked={this.state.completed}
+                            value={this.state.completed}
+                          />
+                          Purchased
+                        </Label>
+                      </FormGroup>
+                    </FormGroup>
                   ) : null}
 
                   <Modal isOpen={this.state.modal} toggle={this.toggle}>
@@ -119,7 +139,7 @@ class ShoppingList extends Component {
                             type="text"
                             name="name"
                             id={_id}
-                            placeholder="Edit item"
+                            defaultValue={this.name}
                             onChange={this.onChange}
                           />
                           {/* <FormGroup row>

@@ -32,6 +32,7 @@ router.put('/:id', (req, res) => {
   Item.findById(req.params.id, (err, item) => {
     if (!item) res.status(404).send('Data is not found');
     else item.name = req.body.name;
+    item.completed = req.body.completed;
 
     item
       .save()
