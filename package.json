@@ -4,6 +4,7 @@
   "description": "Shopping list built with the MERN stack",
   "main": "server.js",
   "scripts": {
+    "test": "export NODE_ENV=test && jasmine",
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
@@ -17,10 +18,19 @@
     "config": "^3.0.1",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jasmine": "^3.4.0",
     "jsonwebtoken": "^8.5.0",
-    "mongoose": "^5.4.17"
+    "mongoose": "^5.4.17",
+    "request": "^2.88.0"
   },
   "devDependencies": {
+    "@babel/register": "^7.4.0",
+    "babel": "^6.23.0",
+    "babel-preset-react-app": "^7.0.2",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "ignore-styles": "^5.0.1",
+    "jasmine-enzyme": "^7.0.2",
     "nodemon": "^1.18.10"
   }
 }
