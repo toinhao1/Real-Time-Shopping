@@ -4,7 +4,7 @@ import {
   FormGroup,
   Form,
   Label,
-  Input
+  Input,
 } from 'reactstrap';
 import { editItem } from '../actions/itemActions'
 

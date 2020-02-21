@@ -4,6 +4,8 @@ import {
   Container,
   ListGroup,
   ListGroupItem,
+  Row,
+  Col
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
@@ -19,11 +21,7 @@ class ShoppingList extends Component {
     this.state = {
       modal: false,
       name: '',
-      completed: false,
-      selectedItem: null
     };
-
-    this.onChangeItemCompleted = this.onChangeItemCompleted.bind(this);
   }
 
   static propTypes = {
@@ -36,7 +34,7 @@ class ShoppingList extends Component {
     this.props.getItems();
   }
 
-  onDeleteClick = id => {
+  onDeleteClick = (id) => {
     this.props.deleteItem(id);
   };
 
@@ -47,12 +45,6 @@ class ShoppingList extends Component {
       name: this.state.name
     });
   };
-
-  onChangeItemCompleted(e) {
-    this.setState({
-      completed: !this.state.completed
-    });
-  }
 
   onChange = e => {
     this.setState({
@@ -84,21 +76,29 @@ class ShoppingList extends Component {
           <TransitionGroup className="shopping-list">
             {items.map((item) => (
               <CSSTransition key={item._id} timeout={500} classNames="fade">
+
                 <ListGroupItem>
-                  {this.props.isAuthenticated ? (
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={this.onDeleteClick.bind(this, item._id)}
-                    >
-                      &times;
+                  <Row>
+                    <Col lg="8 auto">
+                      {this.props.isAuthenticated ? (
+                        <Button
+                          className="remove-btn"
+                          color="danger"
+                          size="sm"
+                          onClick={this.onDeleteClick.bind(this, item._id)}
+                        >
+                          &times;
                     </Button>
-                  ) : null}
-                  {item.name}
-                  <EditItemModal id={item._id} name={item.name} />
-                  <PurchasedOrNot item={item} />
+                      ) : null}
+                      {item.name}
+                    </Col>
+                    <Col style={{ textAlign: 'right' }}>
+                      <EditItemModal id={item._id} name={item.name} />
+                      <PurchasedOrNot item={item} />
+                    </Col>
+                  </Row>
                 </ListGroupItem>
+
               </CSSTransition>
             ))}
           </TransitionGroup>
