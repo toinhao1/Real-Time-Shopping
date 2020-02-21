@@ -10,10 +10,10 @@ import {
   Input
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { addItem } from '../actions/itemActions';
+import { editItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
-class ItemModal extends Component {
+class EditItemModal extends Component {
   state = {
     modal: false,
     name: ''
@@ -23,6 +23,10 @@ class ItemModal extends Component {
     isAuthenticated: PropTypes.bool
   };
 
+  componentDidMount() {
+    this.setState({ name: this.props.name })
+  }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal
@@ -30,18 +34,17 @@ class ItemModal extends Component {
   };
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ name: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
-
-    const newItem = {
+    const updatedItem = {
       name: this.state.name,
-      completed: false
+      id: this.props.id,
+      completed: false,
     };
-    // Add item via addItem action
-    this.props.addItem(newItem);
+    this.props.editItem(updatedItem);
     // Close modal
     this.toggle();
   };
@@ -49,20 +52,17 @@ class ItemModal extends Component {
   render() {
     return (
       <div>
-        {this.props.isAuthenticated ? (
+        {this.props.isAuthenticated &&
           <Button
             color="dark"
             style={{ marginBottom: '2rem' }}
             onClick={this.toggle}
           >
-            Add Item
+            Edit Item
           </Button>
-        ) : (
-            <h4 className="mb-3 ml-4">Please log in to manage items</h4>
-          )}
-
+        }
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add To Shopping List</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Edit Item</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
@@ -71,11 +71,11 @@ class ItemModal extends Component {
                   type="text"
                   name="name"
                   id="item"
-                  placeholder="Add shopping item"
+                  value={this.state.name}
                   onChange={this.onChange}
                 />
                 <Button color="dark" style={{ marginTop: '2rem' }} block>
-                  Add Item
+                  Edit Item
                 </Button>
               </FormGroup>
             </Form>
@@ -93,5 +93,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addItem }
-)(ItemModal);
+  { editItem }
+)(EditItemModal);

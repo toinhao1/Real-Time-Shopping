@@ -38,9 +38,9 @@ export const addItem = item => (dispatch, getState) => {
     );
 };
 
-export const editItem = (item, id) => (dispatch, getState) => {
+export const editItem = (updatedItem) => (dispatch, getState) => {
   axios
-    .put(`/api/items/${id}`, item, tokenConfig(getState))
+    .put(`/api/items/${updatedItem.id}`, updatedItem, tokenConfig(getState))
     .then(res => {
       console.log(res.data);
       dispatch({

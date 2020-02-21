@@ -30,18 +30,21 @@ router.post('/', auth, (req, res) => {
 // @access  Private
 router.put('/:id', (req, res) => {
   Item.findById(req.params.id, (err, item) => {
-    if (!item) res.status(404).send('Data is not found');
-    else item.name = req.body.name;
-    item.completed = req.body.completed;
-
-    item
-      .save()
-      .then(item => {
-        res.json(item);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (!item) {
+      res.status(404).send('Data is not found');
+    }
+    else {
+      item.name = req.body.name;
+      item.completed = req.body.completed;
+      item
+        .save()
+        .then(item => {
+          res.json(item);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   });
 });
 
