@@ -2,11 +2,13 @@ import axios from 'axios';
 import {
   GET_ITEMS,
   ADD_ITEM,
+  ADDING_ITEM,
   DELETE_ITEM,
+  DELETING_ITEM,
   ITEMS_LOADING,
-  EDIT_ITEM
+  EDIT_ITEM,
+  EDITING_ITEM
 } from './types';
-import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
 export const getItems = () => dispatch => {
@@ -24,48 +26,41 @@ export const getItems = () => dispatch => {
     );
 };
 
-export const addItem = item => (dispatch, getState) => {
-  axios
-    .post('/api/items', item, tokenConfig(getState))
-    .then(res =>
-      dispatch({
-        type: ADD_ITEM,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+export const addItem = (item, socket) => dispatch => {
+  dispatch({ type: ADDING_ITEM })
+  socket.emit('addItem', item)
 };
 
-export const editItem = (updatedItem) => (dispatch, getState) => {
-  axios
-    .put(`/api/items/${updatedItem.id}`, updatedItem, tokenConfig(getState))
-    .then(res => {
-      console.log(res.data);
-      dispatch({
-        type: EDIT_ITEM,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+export const showItemAddedBySocket = item => dispatch => {
+  dispatch({
+    type: ADD_ITEM,
+    payload: item
+  })
+}
+
+export const editItem = (updatedItem, socket) => dispatch => {
+  dispatch({ type: EDITING_ITEM })
+  socket.emit('updateItem', updatedItem)
 };
 
-export const deleteItem = id => (dispatch, getState) => {
-  axios
-    .delete(`/api/items/${id}`, tokenConfig(getState))
-    .then(res =>
-      dispatch({
-        type: DELETE_ITEM,
-        payload: id
-      })
-    )
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+export const showItemEditedBySocket = item => dispatch => {
+  dispatch({
+    type: EDIT_ITEM,
+    payload: item
+  })
+}
+
+export const deleteItem = (id, socket) => (dispatch) => {
+  dispatch({ type: DELETING_ITEM })
+  socket.emit('deleteItem', id)
 };
+
+export const showItemDeletedBySocket = data => dispatch => {
+  dispatch({
+    type: DELETE_ITEM,
+    payload: data._id
+  })
+}
 
 export const setItemsLoading = () => {
   return {

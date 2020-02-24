@@ -41,7 +41,7 @@ class ItemModal extends Component {
       completed: false
     };
     // Add item via addItem action
-    this.props.addItem(newItem);
+    this.props.addItem(newItem, this.props.socket);
     // Close modal
     this.toggle();
   };

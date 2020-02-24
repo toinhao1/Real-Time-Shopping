@@ -1,7 +1,10 @@
 export const GET_ITEMS = 'GET_ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
+export const ADDING_ITEM = 'ADDING_ITEM';
 export const EDIT_ITEM = 'EDIT_ITEM';
+export const EDITING_ITEM = 'EDITING_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
+export const DELETING_ITEM = 'DELETING_ITEM';
 export const ITEMS_LOADING = 'ITEMS_LOADING';
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';

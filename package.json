@@ -21,7 +21,8 @@
     "jasmine": "^3.4.0",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.17",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/register": "^7.4.0",

@@ -44,7 +44,7 @@ class EditItemModal extends Component {
       id: this.props.id,
       completed: false,
     };
-    this.props.editItem(updatedItem);
+    this.props.editItem(updatedItem, this.props.socket);
     // Close modal
     this.toggle();
   };

@@ -35,37 +35,7 @@ class ShoppingList extends Component {
   }
 
   onDeleteClick = (id) => {
-    this.props.deleteItem(id);
-  };
-
-  toggle = (id, name) => {
-    this.setState({
-      modal: !this.state.modal,
-      id: id,
-      name: this.state.name
-    });
-  };
-
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-
-    const newItem = {
-      name: this.state.name,
-      completed: this.state.completed,
-      id: this.state.id
-    };
-
-    // Add item via editItem action
-    this.props.editItem(newItem, this.state.id);
-
-    // Close modal
-    this.toggle();
+    this.props.deleteItem(id, this.props.socket);
   };
 
   render() {
@@ -76,7 +46,6 @@ class ShoppingList extends Component {
           <TransitionGroup className="shopping-list">
             {items.map((item) => (
               <CSSTransition key={item._id} timeout={500} classNames="fade">
-
                 <ListGroupItem>
                   <Row>
                     <Col lg="8 auto">
@@ -90,11 +59,11 @@ class ShoppingList extends Component {
                           &times;
                     </Button>
                       ) : null}
-                      {item.name}
+                      {item.completed ? <div className="purchased-item">{item.name}</div> : <div>{item.name}</div>}
                     </Col>
                     <Col style={{ textAlign: 'right' }}>
-                      <EditItemModal id={item._id} name={item.name} />
-                      <PurchasedOrNot item={item} />
+                      <EditItemModal id={item._id} name={item.name} socket={this.props.socket} />
+                      <PurchasedOrNot item={item} socket={this.props.socket} />
                     </Col>
                   </Row>
                 </ListGroupItem>

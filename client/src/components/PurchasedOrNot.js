@@ -28,8 +28,7 @@ class PurchasedOrNot extends Component {
       name: name,
       completed: this.state.checked ? false : true
     }
-    console.log(updatedItem)
-    this.props.editItem(updatedItem)
+    this.props.editItem(updatedItem, this.props.socket)
   }
 
   render() {

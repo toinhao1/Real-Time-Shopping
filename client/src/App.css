@@ -22,3 +22,7 @@
   opacity: 0.01;
   transition: opacity 1000ms ease-in;
 }
+
+.purchased-item {
+  text-decoration: line-through;
+}
