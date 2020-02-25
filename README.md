@@ -4,11 +4,7 @@
 
 ### What is used
 
-> bcryptjs, concurrently, config, dotenv, express,jsonwebtoken, mongoose, axios, bootstrap, react, react-redux, react-scripts, react-transition-group, reactstrap, redux, redux-thunk
-
-### Not Complete
-
-> The project is not complete missing a test suite, purchased/unpurchased checkbox, and real time functionality.
+> React, Redux, Node, Express, MongoDB, and socket.io
 
 ### License
 
