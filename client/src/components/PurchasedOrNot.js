@@ -20,6 +20,12 @@ class PurchasedOrNot extends Component {
     this.setState({ checked: this.props.item.completed })
   }
 
+  componentDidUpdate(oldProps) {
+    if ((!oldProps.item.completed && this.props.item.completed) || (oldProps.item.completed && !this.props.item.completed)) {
+      this.setState({ checked: this.props.item.completed })
+    }
+  }
+
   handleCheck = (e) => {
     this.setState({ checked: this.state.checked ? false : true })
     const { _id, name } = this.props.item

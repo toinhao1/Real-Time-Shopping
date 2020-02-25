@@ -25,4 +25,7 @@
 
 .purchased-item {
   text-decoration: line-through;
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
 }

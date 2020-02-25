@@ -20,15 +20,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     socket.on('ItemAdded', (data) => {
-      console.log('socket item', data)
       store.dispatch(showItemAddedBySocket(data))
     })
     socket.on('ItemUpdated', (data) => {
-      console.log('socket item', data)
       store.dispatch(showItemEditedBySocket(data))
     })
     socket.on('ItemDeleted', (data) => {
-      console.log('socket item', data)
       store.dispatch(showItemDeletedBySocket(data))
     })
   }
