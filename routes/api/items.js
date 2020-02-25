@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
 
 // Item Model
 const Item = require('../../models/Item');
@@ -12,53 +11,6 @@ router.get('/', (req, res) => {
   Item.find()
     .sort({ date: -1 })
     .then(items => res.json(items));
-});
-
-// @route   POST api/items
-// @desc    Create An Item
-// @access  Private
-router.post('/', auth, (req, res) => {
-  const newItem = new Item({
-    name: req.body.name
-  });
-
-  newItem.save()
-    .then(item => res.json(item))
-    .catch((err) => {
-      console.log(err)
-    })
-});
-
-// @route   PUT api/items/:id
-// @desc    Edit an Item
-// @access  Private
-router.put('/:id', (req, res) => {
-  Item.findById(req.params.id, (err, item) => {
-    if (!item) {
-      res.status(404).send('Data is not found');
-    }
-    else {
-      item.name = req.body.name;
-      item.completed = req.body.completed;
-      item
-        .save()
-        .then(item => {
-          res.json(item);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  });
-});
-
-// @route   DELETE api/items/:id
-// @desc    Delete A Item
-// @access  Private
-router.delete('/:id', auth, (req, res) => {
-  Item.findById(req.params.id)
-    .then(item => item.remove().then(() => res.json({ success: true })))
-    .catch(err => res.status(404).json({ success: false }));
 });
 
 module.exports = router;

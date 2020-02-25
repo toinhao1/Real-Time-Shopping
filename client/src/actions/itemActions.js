@@ -26,6 +26,7 @@ export const getItems = () => dispatch => {
     );
 };
 
+// Passing data via sockets
 export const addItem = (item, socket) => dispatch => {
   dispatch({ type: ADDING_ITEM })
   socket.emit('addItem', item)
