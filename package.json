@@ -22,6 +22,7 @@
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.17",
     "request": "^2.88.0",
+    "set-value": "^2.0.1",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
