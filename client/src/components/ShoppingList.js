@@ -17,7 +17,6 @@ import PurchasedOrNot from './PurchasedOrNot'
 class ShoppingList extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       modal: false,
       name: '',

@@ -48,6 +48,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// set up the socket.io server for real time communication
 io.on('connection', socket => {
   console.log('New user using the list.')
 
