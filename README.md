@@ -6,6 +6,3 @@
 
 > React, Redux, Node, Express, MongoDB, and socket.io
 
-### License
-
-> This project is licensed under the MIT License
